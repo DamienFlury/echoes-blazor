@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Echoes.Shared.Models;
 using EchoesServer.Api.Data;
 using EchoesServer.Api.Data.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -29,7 +30,11 @@ namespace Echoes.Server.Controllers
         [Authorize]
         public ActionResult<IEnumerable<Class>> Get()
         {
-            return Ok(_context.Classes.Where(cls => cls.StudentClasses.Select(sc => sc.Student).Any(student => student.User.UserName == User.Identity.Name)));
+            return Ok(_context.Classes.Where(cls => cls.StudentClasses.Select(sc => sc.Student).Any(student => student.User.UserName == User.Identity.Name)).Select(cls => new ClassDto
+            {
+                Id = cls.Id,
+                Name = cls.Name
+            }));
         }
 
         // GET api/values/5

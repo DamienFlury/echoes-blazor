@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Net.Http.Headers;
 using Echoes.Shared;
 using Microsoft.AspNetCore.Blazor;
 
@@ -24,6 +25,7 @@ namespace Echoes.Client.Services
                 var response = await _http.PostJsonAsync<TokenResult>("/api/auth", model);
                 Token = response.Token;
                 ExpireDate = response.ExpireDate;
+                _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
             }
             catch (Exception)
             {

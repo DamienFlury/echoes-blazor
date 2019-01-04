@@ -1,0 +1,34 @@
+﻿@page "/classes"
+@inject HttpClient Http
+@using Echoes.Shared.Models
+
+<h1>Classes</h1>
+
+@if (ClassDtos is null)
+{
+    <p>Loading...</p>
+}
+else if (!ClassDtos.Any())
+{
+    <p>No classes yet</p>
+}
+else
+{
+    <ul>
+        @foreach(var cls in ClassDtos)
+        {
+            <li>@cls</li>
+        }
+    </ul>
+}
+
+
+@functions{        
+
+    public IEnumerable<ClassDto> ClassDtos { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        ClassDtos = await Http.GetJsonAsync<IEnumerable<ClassDto>>("/api/classes");
+    }
+}

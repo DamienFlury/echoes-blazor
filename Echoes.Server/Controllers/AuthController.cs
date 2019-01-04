@@ -56,8 +56,8 @@ namespace Echoes.Server.Controllers
             var cred = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                _configuration["Tokens:Issuer"],
-                _configuration["Tokens:Audience"],
+                _configuration["Jwt:Issuer"],
+                _configuration["Jwt:Audience"],
                 claims,
                 expires: DateTime.UtcNow.AddMinutes(30),
                 signingCredentials: cred);

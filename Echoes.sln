@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.106
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Echoes.Server", "Echoes.Server\Echoes.Server.csproj", "{E68D792E-2CE0-4AED-ABEC-6F7FF9A03375}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Echoes.Server", "Echoes.Server\Echoes.Server.csproj", "{E68D792E-2CE0-4AED-ABEC-6F7FF9A03375}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Echoes.Client", "Echoes.Client\Echoes.Client.csproj", "{7A8BDA7E-A3CA-4607-B113-338F558D73B8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Echoes.Client", "Echoes.Client\Echoes.Client.csproj", "{7A8BDA7E-A3CA-4607-B113-338F558D73B8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Echoes.Shared", "Echoes.Shared\Echoes.Shared.csproj", "{E27AB184-1695-456A-BABE-195DE27EC1C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Echoes.Shared", "Echoes.Shared\Echoes.Shared.csproj", "{E27AB184-1695-456A-BABE-195DE27EC1C1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
