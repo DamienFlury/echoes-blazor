@@ -31,9 +31,6 @@ namespace Echoes.Client.Services
             {
                 Console.WriteLine("Error :(");
             }
-
-
-            Console.WriteLine($"Token: {Token}, Expire date: {ExpireDate}");
         }
     }
 }

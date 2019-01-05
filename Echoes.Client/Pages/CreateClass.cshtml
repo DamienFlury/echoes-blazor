@@ -1,0 +1,24 @@
+﻿@page "/create-class"
+@using Echoes.Shared.Models
+@inject HttpClient Http
+@inject Microsoft.AspNetCore.Blazor.Services.IUriHelper UriHelper
+
+<h1>Create Class</h1>
+
+<form onsubmit="@Submit">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Name" bind="@Class.Name" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create</button>
+</form>
+
+
+@functions{
+    public ClassDto Class { get; set; } = new ClassDto();
+
+    public async Task Submit()
+    {
+        await Http.PostJsonAsync("/api/classes", Class);
+        UriHelper.NavigateTo("/classes");
+    }
+ }

@@ -2,7 +2,7 @@
 @inject HttpClient Http
 @using Echoes.Shared.Models
 
-<h1>Classes</h1>
+<h1>My Classes</h1>
 
 @if (ClassDtos is null)
 {
@@ -14,16 +14,17 @@ else if (!ClassDtos.Any())
 }
 else
 {
-    <ul>
-        @foreach(var cls in ClassDtos)
+    <div class="list-group">
+        @foreach (var cls in ClassDtos)
         {
-            <li>@cls</li>
+            <a href="#" class="list-group-item list-group-item-action">@cls.Name</a>
         }
-    </ul>
+    </div>
 }
 
+<a class="btn btn-primary" style="margin-top: 20px" href="create-class">Create Class</a>
 
-@functions{        
+@functions{
 
     public IEnumerable<ClassDto> ClassDtos { get; set; }
 
