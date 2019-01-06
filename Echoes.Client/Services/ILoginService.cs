@@ -9,6 +9,8 @@ namespace Echoes.Client.Services
     public interface ILoginService
     {
         string Token { get; }
-        Task LoginAsync(LoginViewModel model);
+        Task<bool> LoginFromLocalStorageAsync();
+        Task<bool> LoginAsync(LoginViewModel model);
+        bool IsLoggedIn { get; }
     }
 }

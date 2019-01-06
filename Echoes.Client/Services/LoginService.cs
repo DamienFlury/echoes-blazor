@@ -4,21 +4,31 @@ using System.Threading.Tasks;
 using System.Net.Http.Headers;
 using Echoes.Shared;
 using Microsoft.AspNetCore.Blazor;
+using Blazor.Extensions.Storage;
 
 namespace Echoes.Client.Services
 {
     public class LoginService : ILoginService
     {
         private readonly HttpClient _http;
+        private readonly LocalStorage _localStorage;
 
-        public LoginService(HttpClient http)
-        {
-            _http = http;
-        }
+        public LoginService(HttpClient http, LocalStorage localStorage) => (_http, _localStorage) = (http, localStorage);
 
         public string Token { get; private set; }
         public DateTime ExpireDate { get; private set; }
-        public async Task LoginAsync(LoginViewModel model)
+        public bool IsLoggedIn => !string.IsNullOrEmpty(Token);
+
+        public async Task<bool> LoginFromLocalStorageAsync()
+        {
+            var token = await _localStorage.GetItem<string>("token");
+            if (token is null) return false;
+            Token = token;
+            _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+            return true;
+        }
+
+        public async Task<bool> LoginAsync(LoginViewModel model)
         {
             try
             {
@@ -26,10 +36,12 @@ namespace Echoes.Client.Services
                 Token = response.Token;
                 ExpireDate = response.ExpireDate;
                 _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Token);
+                await _localStorage.SetItem("token", Token);
+                return true;
             }
             catch (Exception)
             {
-                Console.WriteLine("Error :(");
+                return false;
             }
         }
     }
