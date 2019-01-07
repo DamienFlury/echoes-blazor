@@ -1,0 +1,22 @@
+﻿@page "/classes/{classId}"
+@using Echoes.Shared.Models
+@inject HttpClient Http
+
+@if (!(Class is null))
+{
+    <h1>@Class.Name</h1>
+}
+
+@functions
+{
+    [Parameter]
+    private string ClassId { get; set; }
+
+    private ClassDto Class { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        Class = await Http.GetJsonAsync<ClassDto>("/api/classes/" + ClassId);
+    }
+}
+
