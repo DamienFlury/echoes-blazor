@@ -47,6 +47,8 @@ app {
 .nav-item {
     font-size: 0.9rem;
     padding-bottom: 0.5rem;
+    color: #d7d7d7 !important;
+    cursor: pointer;
 }
 
     .nav-item:first-of-type {
@@ -58,7 +60,7 @@ app {
     }
 
     .nav-item a {
-        color: #d7d7d7;
+        color: #d7d7d7 !important;
         border-radius: 4px;
         height: 3rem;
         display: flex;

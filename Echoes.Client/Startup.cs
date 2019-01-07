@@ -9,7 +9,7 @@ namespace Echoes.Client
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<ILoginService, LoginService>();
+            services.AddSingleton<LoginService>();
             services.AddStorage();
         }
 
