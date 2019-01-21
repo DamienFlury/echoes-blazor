@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using EchoesServer.Api.Data;
-using EchoesServer.Api.Data.Entities;
+using Echoes.Server.Data;
+using Echoes.Server.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Echoes.Server.Controllers

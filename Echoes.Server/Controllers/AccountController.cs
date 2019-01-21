@@ -1,8 +1,9 @@
+using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Echoes.Server.Data;
+using Echoes.Server.Data.Entities;
 using Echoes.Shared;
-using EchoesServer.Api.Data;
-using EchoesServer.Api.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -39,13 +40,23 @@ namespace Echoes.Server.Controllers
 
             var student = new Student
             {
+                Id = _context.Students.Count() + 1,
                 FirstName = user.Email,
                 LastName = user.Email,
                 User = user
             };
 
             await _context.Students.AddAsync(student);
-            await _context.SaveChangesAsync();
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+
+            }
+
             return Created("User created", new { user.Email });
         }
 

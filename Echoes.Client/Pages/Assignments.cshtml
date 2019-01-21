@@ -1,0 +1,33 @@
+﻿@page "/assignments"
+@inject HttpClient Http
+@using Echoes.Shared.Models
+
+<h1>Assignments</h1>
+
+@if (AssignmentDtos is null)
+{
+    <p>Loading...</p>
+}
+else if (!AssignmentDtos.Any())
+{
+    <p>No classes yet</p>
+}
+else
+{
+    <div class="list-group">
+        @foreach (var assignment in AssignmentDtos)
+        {
+            <a href="/assignments/@assignment.Id" class="list-group-item list-group-item-action">@assignment.Title</a>
+        }
+    </div>
+}
+
+@functions{
+
+    public IEnumerable<AssignmentDto> AssignmentDtos { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        AssignmentDtos = await Http.GetJsonAsync<IEnumerable<AssignmentDto>>("/api/assignments");
+    }
+}

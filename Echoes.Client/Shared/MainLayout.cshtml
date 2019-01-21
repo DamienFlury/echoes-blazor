@@ -1,4 +1,6 @@
 ﻿@inherits BlazorLayoutComponent
+@using Echoes.Client.Services
+@inject LoginService LoginService
 
 <div class="sidebar">
     <NavMenu />
@@ -13,3 +15,14 @@
         @Body
     </div>
 </div>
+
+@functions
+{
+
+protected override async Task OnInitAsync()
+{
+    await LoginService.LoginFromLocalStorageAsync();
+    Console.WriteLine("IS logged in : " + LoginService.IsLoggedIn);
+}
+
+}

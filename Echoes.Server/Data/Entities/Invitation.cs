@@ -1,10 +1,11 @@
 namespace Echoes.Server.Data.Entities
 {
-    public class StudentAssignment
+    public class Invitation
     {
+        public int ClassId { get; set; }
+        public Class Class { get; set; }
+        
         public int StudentId { get; set; }
         public Student Student { get; set; }
-        public int AssignmentId { get; set; }
-        public Assignment Assignment { get; set; }
     }
 }

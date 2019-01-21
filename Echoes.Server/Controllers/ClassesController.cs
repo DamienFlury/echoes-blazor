@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Echoes.Server.Data;
+using Echoes.Server.Data.Entities;
 using Echoes.Shared.Models;
-using EchoesServer.Api.Data;
-using EchoesServer.Api.Data.Entities;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +13,7 @@ namespace Echoes.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ClassesController : ControllerBase
     {
         private readonly SchoolContext _context;
@@ -25,25 +25,37 @@ namespace Echoes.Server.Controllers
             _userManager = userManager;
         }
 
-        // GET api/values
-        [HttpGet]
-        [Authorize]
-        public ActionResult<IEnumerable<Class>> Get()
-        {
-            return Ok(_context.Classes.Where(cls => cls.StudentClasses.Select(sc => sc.Student).Any(student => student.User.UserName == User.Identity.Name)).Select(cls => new ClassDto
+        private IQueryable<ClassDto> GetAll() =>
+            from cls in _context.Classes
+            join sc in _context.StudentClasses on cls.Id equals sc.ClassId
+            join student in _context.Students on sc.StudentId equals student.Id
+            where student.User.UserName == User.Identity.Name
+            select new ClassDto
             {
                 Id = cls.Id,
-                Name = cls.Name
-            }));
-        }
+                Name = cls.Name,
+                Assignments = cls.Assignments.Select(a => new AssignmentDto
+                {
+                    Id = a.Id,
+                    Title = a.Title,
+                    Description = a.Description
+                }).ToArray()
+            };
+
+        // GET api/values
+        [HttpGet]
+        public ActionResult<IEnumerable<ClassDto>> Get() => Ok(GetAll());
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<object>> Get(int id) =>
-            await _context.Classes.Include(cls => cls.Assignments).SingleOrDefaultAsync(cls => cls.Id == id);
+        public async Task<ActionResult<ClassDto>> Get(int id)
+        {
+            var cls = await GetAll().Include(c => c.Assignments).SingleOrDefaultAsync(c => c.Id == id);
+            if (cls is null) return Unauthorized();
+            return cls;
+        }
 
         [HttpPost]
-        [Authorize]
         public async Task<ActionResult> Create([FromBody] Class cls)
         {
             var student = await _context.Students.SingleOrDefaultAsync(std => std.User.UserName == User.Identity.Name);

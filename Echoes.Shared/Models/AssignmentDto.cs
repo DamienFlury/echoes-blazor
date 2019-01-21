@@ -12,5 +12,7 @@ namespace Echoes.Shared.Models
         public ICollection<StudentDto> Students { get; set; }
         public int ClassId { get; set; }
         public ClassDto Class { get; set; }
+        public DateTime DueTo { get; set; }
+        public int StudentId { get; set; }
     }
 }

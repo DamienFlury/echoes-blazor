@@ -1,14 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
+using Echoes.Server.Data.Entities;
 using Echoes.Shared;
-using EchoesServer.Api.Data;
-using EchoesServer.Api.Data.Entities;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -18,7 +14,6 @@ namespace Echoes.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-
     public class AuthController : ControllerBase
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -61,11 +56,11 @@ namespace Echoes.Server.Controllers
                 claims,
                 expires: DateTime.UtcNow.AddMinutes(30),
                 signingCredentials: cred);
-
-            var results = new TokenResult
+            
+            var results = new
             {
                 Token = new JwtSecurityTokenHandler().WriteToken(token),
-                ExpireDate = token.ValidTo
+                expiration = token.ValidTo
             };
 
             return Created("", results);

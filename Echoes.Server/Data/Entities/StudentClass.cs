@@ -1,4 +1,4 @@
-namespace EchoesServer.Api.Data.Entities
+namespace Echoes.Server.Data.Entities
 {
     public class StudentClass
     {
