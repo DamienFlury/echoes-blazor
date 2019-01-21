@@ -4,11 +4,11 @@
 
 @if (!(Class is null))
 {
-    <div class="row">
-        <div class="float-left">
+    <div class="d-flex justify-content-between">
+        <div>
             <h1>@Class.Name</h1>
         </div>
-        <div class="float-right">
+        <div>
             <a class="btn btn-primary" href="/invite/@ClassId">Invite...</a>
         </div>
     </div>
