@@ -22,7 +22,6 @@
 protected override async Task OnInitAsync()
 {
     await LoginService.LoginFromLocalStorageAsync();
-    Console.WriteLine("IS logged in : " + LoginService.IsLoggedIn);
 }
 
 }

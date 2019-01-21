@@ -5,26 +5,23 @@
 @if (!(Class is null))
 {
     <h1>@Class.Name</h1>
-
-    <div class="card">
-        <div class="card-header">
-            <h1 class="card-title">Create Assignment</h1>
-        </div>
-        <div class="card-body">
-            <div class="form-group">
-                <input class="form-control" placeholder="Title" bind="@Assignment.Title"/>
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" placeholder="Description" bind="@Assignment.Description"></textarea>
-            </div>
-            <button class="btn btn-success" onclick="@CreateAssignment">Save</button>
+     
+    <div class="row">
+        <div class="col">
+            <a class="btn btn-primary" href="/create-assignment/@ClassId">New Assignment...</a>
         </div>
     </div>
-    <div class="list-group">
-        @foreach (var assignment in Class.Assignments)
-        {
-            <a href="/assignments/@assignment.Id" class="list-group-item list-group-item-action">@assignment.Title</a>
-        }
+
+    <div class="row mt-2">
+        <div class="col">
+
+            <div class="list-group">
+                @foreach (var assignment in Class.Assignments)
+                {
+                    <a href="/assignments/@assignment.Id" class="list-group-item list-group-item-action">@assignment.Title</a>
+                }
+            </div>
+        </div>
     </div>
 }
 

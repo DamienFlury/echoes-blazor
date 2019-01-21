@@ -12,24 +12,33 @@
     <div class="form-group">
         <input class="form-control" bind="@Assignment.Description" />
     </div>
-    <button class="btn btn-success" onclick="@SaveAsync">Save</button>
+    <div class="btn-toolbar">
+        <button class="btn btn-success mr-2" onclick="@SaveAsync">Save</button>
+        <button class="btn btn-danger" onclick="@DeleteAsync">Delete</button>
+    </div>
 }
 
 @functions
 {
-[Parameter]
-private string AssignmentId { get; set; }
+    [Parameter]
+    private string AssignmentId { get; set; }
 
-private AssignmentDto Assignment { get; set; }
+    private AssignmentDto Assignment { get; set; }
 
-protected override async Task OnInitAsync()
-{
-    Assignment = await Http.GetJsonAsync<AssignmentDto>("/api/assignments/" + AssignmentId);
-}
+    protected override async Task OnInitAsync()
+    {
+        Assignment = await Http.GetJsonAsync<AssignmentDto>("/api/assignments/" + AssignmentId);
+    }
 
-private async Task SaveAsync()
-{
-    await Http.PutJsonAsync("/api/assignments/" + AssignmentId, Assignment);
-    UriHelper.NavigateTo("/assignments");
-}
+    private async Task SaveAsync()
+    {
+        await Http.PutJsonAsync("/api/assignments/" + AssignmentId, Assignment);
+        UriHelper.NavigateTo("/assignments");
+    }
+
+    private async Task DeleteAsync()
+    {
+        await Http.DeleteAsync("/api/assignments/" + AssignmentId);
+        UriHelper.NavigateTo("/assignments");
+    }
 }
