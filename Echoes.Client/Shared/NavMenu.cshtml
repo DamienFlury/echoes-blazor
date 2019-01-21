@@ -1,5 +1,7 @@
 ﻿@using Echoes.Client.Services
+@using Microsoft.AspNetCore.Blazor.Services
 @inject LoginService LoginService
+@inject IUriHelper UriHelper
 
 <div class="top-row pl-4 navbar navbar-dark">
     <a class="navbar-brand" href="">Echoes</a>
@@ -62,5 +64,6 @@
     async Task LogoutAsync()
     {
         await LoginService.LogoutAsync();
+        UriHelper.NavigateTo("/");
     }
 }

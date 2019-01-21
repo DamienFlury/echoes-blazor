@@ -1,7 +1,9 @@
 ﻿@page "/login"
 @using Echoes.Client.Services
 @using Echoes.Shared
+@using Microsoft.AspNetCore.Blazor.Services
 @inject LoginService LoginService
+@inject IUriHelper UriHelper
 
 <h1>Login</h1>
 
@@ -28,6 +30,7 @@
     public async Task Submit()
     {
         await LoginService.LoginAsync(LoginViewModel);
+        UriHelper.NavigateTo("/");
     }
 
 }
