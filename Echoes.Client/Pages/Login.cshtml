@@ -6,11 +6,14 @@
 <h1>Login</h1>
 
 <form onsubmit="@Submit">
-    <div class="form-group">
+    <div class="form-group input-group">
+        <div class="input-group-prepend">
+            <div class="input-group-text">@@</div>
+        </div>
         <input type="email" class="form-control" id="inputEmail" placeholder="Email Address" bind="@LoginViewModel.Email" />
     </div>
     <div class="form-group">
-        <input type="password" class="form-control" id="inputPassword" placeholder="Password" bind="@LoginViewModel.Password" />
+        <input type="password" class="form-control" id="inputPassword" placeholder="Password" bind="@LoginViewModel.Password"/>
     </div>
     
     <a href="sign-up">Sign up instead!</a>
