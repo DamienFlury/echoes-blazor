@@ -1,0 +1,34 @@
+﻿@page "/invite/{classId}"
+@using Echoes.Shared
+@inject HttpClient Http
+
+<form onsubmit="">
+    <div class="form-group input-group">
+        <div class="input-group-prepend">
+            <div class="input-group-text">@@</div>
+        </div>
+        <input class="form-control" bind="@Email" />
+    </div>
+    <button type="submit" class="btn btn-success" onclick="@SubmitAsync">Save</button>
+</form>
+
+@functions
+{
+
+    [Parameter]
+    private string ClassId { get; set; }
+
+    private string Email { get; set; }
+
+    private async Task SubmitAsync()
+    {
+        var inv = new InvitationByEmail
+        {
+            ClassId = int.Parse(ClassId),
+            Email = Email
+        };
+
+        await Http.PostJsonAsync("/api/invitations", inv);
+    }
+
+}

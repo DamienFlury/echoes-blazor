@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Echoes.Server.Data;
 using Echoes.Server.Data.Entities;
+using Echoes.Shared;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

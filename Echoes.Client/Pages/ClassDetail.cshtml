@@ -4,8 +4,15 @@
 
 @if (!(Class is null))
 {
-    <h1>@Class.Name</h1>
-     
+    <div class="row">
+        <div class="float-left">
+            <h1>@Class.Name</h1>
+        </div>
+        <div class="float-right">
+            <a class="btn btn-primary" href="/invite/@ClassId">Invite...</a>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col">
             <a class="btn btn-primary" href="/create-assignment/@ClassId">New Assignment...</a>
@@ -27,29 +34,29 @@
 
 @functions
 {
-    [Parameter]
-    private string ClassId { get; set; }
+[Parameter]
+private string ClassId { get; set; }
 
-    private ClassDto Class { get; set; }
+private ClassDto Class { get; set; }
 
-    private AssignmentDto Assignment { get; } = new AssignmentDto();
+private AssignmentDto Assignment { get; } = new AssignmentDto();
 
-    protected override async Task OnInitAsync()
-    {
-        await UpdateClass();
-        Assignment.ClassId = int.Parse(ClassId);
-    }
+protected override async Task OnInitAsync()
+{
+    await UpdateClass();
+    Assignment.ClassId = int.Parse(ClassId);
+}
 
-    private async Task CreateAssignment()
-    {
-        await Http.PostJsonAsync("/api/assignments", Assignment);
-        await UpdateClass();
-    }
+private async Task CreateAssignment()
+{
+    await Http.PostJsonAsync("/api/assignments", Assignment);
+    await UpdateClass();
+}
 
-    private async Task UpdateClass()
-    {
-        Class = await Http.GetJsonAsync<ClassDto>("/api/classes/" + ClassId);
+private async Task UpdateClass()
+{
+    Class = await Http.GetJsonAsync<ClassDto>("/api/classes/" + ClassId);
 
-    }
+}
 }
 

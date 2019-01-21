@@ -1,4 +1,4 @@
-namespace Echoes.Server.Data
+namespace Echoes.Shared
 {
     public class InvitationByEmail
     {
