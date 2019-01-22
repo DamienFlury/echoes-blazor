@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Threading.Tasks;
 using Echoes.Server.Data;
 using Echoes.Server.Data.Entities;
 using Echoes.Shared;
+using Echoes.Shared.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,20 +43,24 @@ namespace Echoes.Server.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Invitation>> Get()
+        public ActionResult<IEnumerable<ClassDto>> Get()
         {
             var student = _context.Students.SingleOrDefault(stud => stud.User.UserName == User.Identity.Name);
             if (student is null) return BadRequest();
 
             var invitations = from invitation in _context.Invitations
                 where invitation.StudentId == student.Id
-                select invitation.Class;
+                select new ClassDto
+                {
+                    Id= invitation.Class.Id,
+                    Name = invitation.Class.Name
+                };
 
             return Ok(invitations);
         }
 
         [HttpGet("accept/{id}")]
-        public ActionResult<IEnumerable<Invitation>> Accept(int id)
+        public ActionResult<IEnumerable<ClassDto>> Accept(int id)
         {
             var student = _context.Students.SingleOrDefault(stud => stud.User.UserName == User.Identity.Name);
             if (student is null) return BadRequest();

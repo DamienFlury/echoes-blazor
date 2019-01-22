@@ -1,0 +1,43 @@
+﻿@page "/invitations"
+@inject HttpClient Http
+@using Echoes.Shared.Models
+
+<h1>Invitations</h1>
+
+@if (InvitedClasses is null)
+{
+    <p>Loading...</p>
+}
+else if (!InvitedClasses.Any())
+{
+    <p>No invitations yet</p>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var invitation in InvitedClasses)
+        {
+            <li class="list-group-item">
+                <span>@invitation.Name</span>
+                <button class="btn btn-success float-right" onclick="@(async () => await AcceptAsync(invitation.Id))">Accept</button>
+            </li>
+        }
+    </ul>
+}
+
+<a class="btn btn-primary" style="margin-top: 20px" href="create-class">Create Class</a>
+
+@functions{
+
+    public IEnumerable<ClassDto> InvitedClasses { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        InvitedClasses = await Http.GetJsonAsync<IEnumerable<ClassDto>>("/api/invitations");
+    }
+
+    private async Task AcceptAsync(int classId)
+    {
+        InvitedClasses = await Http.GetJsonAsync<IEnumerable<ClassDto>>("/api/invitations/accept/" + classId);
+    }
+}
